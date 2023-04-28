@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const useSearcherFilter = ({ searcher, data, parameterToFind = 'name' }) => {
+export const useSearcherFilter = ({ parameterToFind = 'name' }) => {
     const [filterData, setFilterData] = useState([]);
-    useEffect(() => {
-        const filter = handleFilterData();
-        setFilterData(filter);
 
-    }, [searcher, data])
-
-    const handleFilterData = () => {
+    const handleFilterData = ({ searcher, countries }) => {
         const search = searcher.toLowerCase(searcher)
-        const result = data.filter(item => String(item[parameterToFind]).toLowerCase().includes(search));
-        return result;
+        const result = countries?.filter(item => String(item[parameterToFind]).toLowerCase().includes(search));
+        setFilterData(!search ? countries : result);
     }
 
-    if (!searcher) return { filterData: data }
-
-    return { filterData }
+    return { filterData, handleFilterData }
 }

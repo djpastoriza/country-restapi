@@ -1,18 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 
 const ALCOUNTRYAPI = 'https://restcountries.com/v3.1/all?fields=name,flags,region,population'
 const REGIONAPI = 'https://restcountries.com/v3.1/region/'
 
-export const useCountries = ({ continent, searcher }) => {
+export const useCountries = () => {
     const [countries, setCountries] = useState(null);
 
-    useEffect(() => {
-        getCountries();
-    }, [continent, searcher])
-
-    const getCountries = () => {
+    const getCountries = ({ continent }) => {
         let api = ALCOUNTRYAPI;
         if (continent) {
             api = REGIONAPI + `${continent}`
@@ -28,5 +24,5 @@ export const useCountries = ({ continent, searcher }) => {
         })
     }
 
-    return { countries }
+    return { countries, getCountries }
 }
